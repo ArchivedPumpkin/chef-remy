@@ -27,8 +27,19 @@ export default function Main() {
     function handleSubmit(formData) {
         const newIngredient = formData.get("ingredient")
         if (newIngredient.trim()) {
-            setIngredients(prevIngredients => [...prevIngredients, newIngredient])
+            const ingredientsArr = newIngredient
+                .split(",")
+                .map(ingredient => ingredient.trim())
+                .filter(ingredient => ingredient.length > 0)
+
+
+            setIngredients(prevIngredients => [...prevIngredients, ...ingredientsArr])
         }
+    }
+
+    function startOver() {
+        setIngredients([])
+        setShowRecipe("")
     }
 
     async function getRecipe() {
@@ -40,15 +51,15 @@ export default function Main() {
 
     return (
         <main>
-            <form action={handleSubmit} className="add-ingredient-form">
+            <form action={showRecipe ? startOver : handleSubmit} className="add-ingredient-form">
                 <input
                     type="text"
                     placeholder="e.g. tomatoes, basil, garlic..."
                     aria-label="Add ingredient"
                     name="ingredient"
-                    required
+                    required={!showRecipe}
                 />
-                <button>Add Ingredient</button>
+                <button>{showRecipe ? "Start Over" : "Add Ingredient"}</button>
             </form>
             {ingredients.length > 0 &&
                 <IngredientsList
