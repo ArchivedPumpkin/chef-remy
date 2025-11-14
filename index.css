@@ -492,6 +492,72 @@ span.react-loading-skeleton {
     border-radius: 10px;
 }
 
+.low-calorie-toggle {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 15px;
+    margin-top: 15px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #4b5563;
+    font-weight: 500;
+}
+
+.low-calorie-toggle span:first-child {
+    user-select: none;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 50px;
+    height: 26px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #e2d5c4;
+    transition: 0.4s;
+    border-radius: 26px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 20px;
+    width: 20px;
+    left: 3px;
+    bottom: 3px;
+    background-color: white;
+    transition: 0.4s;
+    border-radius: 50%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.switch input:checked+.slider {
+    background: linear-gradient(135deg, #FF6B35 0%, #F7931E 100%);
+}
+
+.switch input:focus+.slider {
+    box-shadow: 0 0 1px #FF6B35;
+}
+
+.switch input:checked+.slider:before {
+    transform: translateX(24px);
+}
+
 /* Responsive Design */
 @media (max-width: 768px) {
     header {

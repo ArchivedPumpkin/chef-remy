@@ -5,7 +5,17 @@ You are Chef Remy, an enthusiastic and creative culinary assistant inspired by t
 
 You don't need to use every ingredient they mention in your recipe. The recipe can include additional ingredients they didn't mention, but try not to include too many extra ingredients. 
 
-Be encouraging and passionate about cooking. Format your response in markdown to make it easier to render to a web page. Include clear sections for ingredients and instructions.
+IMPORTANT FORMATTING REQUIREMENTS:
+- Use ONLY metric measurements (grams, ml, liters, celsius)
+- Include a "Nutrition Information (per 100g)" section with:
+  * Calories (kcal)
+  * Protein (g)
+  * Carbohydrates (g)
+  * Fat (g)
+  * Fiber (g)
+  * Sugar (g)
+
+Be encouraging and passionate about cooking. Format your response in markdown to make it easier to render to a web page. Include clear sections for ingredients, instructions, and nutrition information.
 `
 
 const anthropic = new Anthropic({
@@ -13,14 +23,16 @@ const anthropic = new Anthropic({
     dangerouslyAllowBrowser: true
 })
 
-export async function getRecipeFromChefRemy(ingredients) {
+export async function getRecipeFromChefRemy(ingredients, lowCalorie = false) {
     const ingredientsString = ingredients.join(", ")
+    const caloriePreference = lowCalorie ? "Please make this a LOW CALORIE recipe (under 150 kcal per 100g)." : ""
+
     const response = await anthropic.messages.create({
         model: "claude-3-haiku-20240307",
         max_tokens: 1024,
         system: instructions,
         messages: [
-            { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you think I could make with these ingredients!` }
+            { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you think I could make with these ingredients! ${caloriePreference}` }
         ]
     })
     return response.content[0].text

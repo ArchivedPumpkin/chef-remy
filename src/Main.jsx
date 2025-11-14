@@ -11,6 +11,7 @@ export default function Main() {
     const recipeSection = React.useRef(null)
     const ingredientsSection = React.useRef(null)
     const [isLoading, setIsLoading] = React.useState(false)
+    const [lowCalorie, setLowCalorie] = React.useState(false)
 
     React.useEffect(() => {
         if (showRecipe && recipeSection.current !== null) {
@@ -40,11 +41,12 @@ export default function Main() {
     function startOver() {
         setIngredients([])
         setShowRecipe("")
+        setLowCalorie(false)
     }
 
     async function getRecipe() {
         setIsLoading(true)
-        const responseAi = await getRecipeFromChefRemy(ingredients)
+        const responseAi = await getRecipeFromChefRemy(ingredients, lowCalorie)
         setShowRecipe(responseAi)
         setIsLoading(false)
     }
@@ -66,6 +68,8 @@ export default function Main() {
                     ref={ingredientsSection}
                     ingredients={ingredients}
                     getRecipe={getRecipe}
+                    lowCalorie={lowCalorie}
+                    setLowCalorie={setLowCalorie}
                 />
             }
             {(showRecipe || isLoading) &&
