@@ -617,6 +617,12 @@ span.react-loading-skeleton {
         text-align: center;
     }
 
+    .get-recipe-container>div {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
     .get-recipe-container button {
         width: 100%;
     }
