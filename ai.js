@@ -25,7 +25,7 @@ const anthropic = new Anthropic({
 
 export async function getRecipeFromChefRemy(ingredients, lowCalorie = false) {
     const ingredientsString = ingredients.join(", ")
-    const caloriePreference = lowCalorie ? "Please make this a LOW CALORIE recipe (under 150 kcal per 100g)." : ""
+    const caloriePreference = lowCalorie ? "Please make this a LOW CALORIE recipe." : ""
 
     const response = await anthropic.messages.create({
         model: "claude-3-haiku-20240307",
