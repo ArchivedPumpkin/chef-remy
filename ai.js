@@ -27,10 +27,11 @@ export async function getRecipeFromChefRemy(ingredients, lowCalorie = false) {
     const ingredientsString = ingredients.join(", ")
     const caloriePreference = lowCalorie ? "Please make this a LOW CALORIE recipe." : ""
 
+    let response
     try {
-    const response = await anthropic.messages.create({
-        model: "claude-3-haiku-20240307",
-        max_tokens: 1024,
+        response = await anthropic.messages.create({
+        model: "claude-haiku-4-5-20251001",
+        max_tokens: 4096,
         system: instructions,
         messages: [
             { role: "user", content: `I have ${ingredientsString}. Please give me a recipe you think I could make with these ingredients! ${caloriePreference}` }
