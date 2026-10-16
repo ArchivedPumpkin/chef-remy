@@ -1,9 +1,8 @@
 import React from 'react'
 import ReactMarkdown from 'react-markdown'
-import Skeleton from 'react-loading-skeleton'
-import 'react-loading-skeleton/dist/skeleton.css'
+import CookingRemy from './CookingRemy'
 
-export default function RemyRecipe({ recipe, isLoading }) {
+export default function RemyRecipe({ recipe, isLoading, ingredients }) {
     const recipeRef = React.useRef(null)
 
     React.useEffect(() => {
@@ -17,7 +16,7 @@ export default function RemyRecipe({ recipe, isLoading }) {
         <section ref={recipeRef} className="generated-recipe-container" aria-live="polite">
             <h2>Chef Remy Recommends:</h2>
             {isLoading ? (
-                <Skeleton count={5.5} />
+                <CookingRemy ingredients={ingredients} />
             ) : (
                 <ReactMarkdown>
                     {recipe}

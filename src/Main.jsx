@@ -93,6 +93,7 @@ export default function Main() {
           ref={recipeSection}
           recipe={showRecipe}
           isLoading={isLoading}
+          ingredients={ingredients}
         />
       )}
     </main>

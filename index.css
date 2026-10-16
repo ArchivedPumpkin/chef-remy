@@ -487,9 +487,266 @@ ul.ingredients-list>li::before {
     color: #F7931E;
 }
 
-span.react-loading-skeleton {
-    margin-bottom: 12px;
-    border-radius: 10px;
+/* Cooking animation (shown while the recipe is generating) */
+.sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+}
+
+.cooking-remy {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px 0 5px;
+}
+
+.cooking-scene {
+    --fly-distance: 150px;
+    position: relative;
+    width: 260px;
+    height: 200px;
+}
+
+.cooking-remy-chef {
+    position: absolute;
+    left: 40px;
+    bottom: 82px;
+    width: 110px;
+    height: 110px;
+    animation: remyBob 1.4s ease-in-out infinite;
+}
+
+@keyframes remyBob {
+
+    0%,
+    100% {
+        transform: translateY(0) rotate(-4deg);
+    }
+
+    50% {
+        transform: translateY(-14px) rotate(4deg);
+    }
+}
+
+.cooking-pot {
+    position: absolute;
+    left: 20px;
+    bottom: 0;
+    width: 220px;
+    overflow: visible;
+}
+
+.pot-body,
+.pot-handle {
+    fill: #12333f;
+}
+
+.pot-rim {
+    fill: #2b5566;
+}
+
+.pot-shine {
+    fill: rgba(255, 255, 255, 0.15);
+}
+
+.soup {
+    fill: #F7931E;
+}
+
+.bubble {
+    fill: #FFD27A;
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: bubblePop 1.6s ease-in-out infinite;
+}
+
+.bubble-2 {
+    animation-delay: 0.5s;
+}
+
+.bubble-3 {
+    animation-delay: 1s;
+}
+
+@keyframes bubblePop {
+
+    0%,
+    100% {
+        transform: scale(0);
+    }
+
+    50% {
+        transform: scale(1);
+    }
+}
+
+.spoon line {
+    stroke: #c8915f;
+    stroke-width: 7;
+    stroke-linecap: round;
+}
+
+.spoon {
+    transform-box: view-box;
+    transform-origin: 150px 34px;
+    animation: stir 0.9s ease-in-out infinite alternate;
+}
+
+@keyframes stir {
+    0% {
+        transform: rotate(-14deg) translateX(-10px);
+    }
+
+    100% {
+        transform: rotate(12deg) translateX(-30px);
+    }
+}
+
+.steam {
+    fill: none;
+    stroke: #d6c4b0;
+    stroke-width: 4;
+    stroke-linecap: round;
+    opacity: 0.6;
+    animation: steamRise 2.4s ease-in-out infinite;
+}
+
+.steam-2 {
+    animation-delay: 1.2s;
+}
+
+@keyframes steamRise {
+    0% {
+        transform: translateY(6px);
+        opacity: 0;
+    }
+
+    40% {
+        opacity: 0.7;
+    }
+
+    100% {
+        transform: translateY(-16px);
+        opacity: 0;
+    }
+}
+
+.flame {
+    fill: #FF6B35;
+    transform-box: fill-box;
+    transform-origin: bottom center;
+    animation: flicker 0.5s ease-in-out infinite alternate;
+}
+
+.flame-2 {
+    fill: #F7931E;
+    animation-delay: 0.2s;
+}
+
+.flame-3 {
+    animation-delay: 0.35s;
+}
+
+@keyframes flicker {
+    0% {
+        transform: scaleY(0.8) scaleX(1.05);
+    }
+
+    100% {
+        transform: scaleY(1.15) scaleX(0.95);
+    }
+}
+
+.flying-ingredient {
+    --from-x: calc(var(--side) * var(--fly-distance));
+    position: absolute;
+    left: 130px;
+    top: 86px;
+    z-index: 2;
+    padding: 4px 12px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #FFF9E6 0%, #FFE4B5 100%);
+    border: 1px solid #FFD700;
+    color: #4b5563;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.4;
+    white-space: nowrap;
+    max-width: 120px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    opacity: 0;
+    /* Duration must match FLY_DURATION in CookingRemy.jsx */
+    animation: flyIntoPot 3.6s ease-in-out infinite both;
+}
+
+@keyframes flyIntoPot {
+    0% {
+        transform: translate(calc(-50% + var(--from-x)), -10px) scale(1) rotate(0deg);
+        opacity: 0;
+    }
+
+    10% {
+        opacity: 1;
+    }
+
+    45% {
+        transform: translate(calc(-50% + var(--from-x) * 0.45), -85px) scale(1) rotate(calc(var(--side) * -15deg));
+        opacity: 1;
+    }
+
+    75% {
+        transform: translate(-50%, -10px) scale(0.7) rotate(calc(var(--side) * -30deg));
+        opacity: 1;
+    }
+
+    85%,
+    100% {
+        transform: translate(-50%, 12px) scale(0.3) rotate(calc(var(--side) * -40deg));
+        opacity: 0;
+    }
+}
+
+.cooking-message {
+    margin: 18px 0 0;
+    font-family: 'Caveat', cursive;
+    font-size: 1.6rem;
+    font-weight: 700;
+    color: #FF6B35;
+    text-align: center;
+    animation: messageIn 0.4s ease-out;
+}
+
+@keyframes messageIn {
+    0% {
+        opacity: 0;
+        transform: translateY(8px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+    .cooking-scene *,
+    .cooking-message {
+        animation: none !important;
+    }
+
+    .flying-ingredient {
+        display: none;
+    }
 }
 
 .low-calorie-toggle {
@@ -629,5 +886,9 @@ span.react-loading-skeleton {
 
     section {
         padding: 25px;
+    }
+
+    .cooking-scene {
+        --fly-distance: 105px;
     }
 }
